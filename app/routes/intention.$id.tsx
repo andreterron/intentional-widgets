@@ -41,6 +41,11 @@ export default function IntentionIdRoute({
     setIntention({ ...intention, title: e.target.value ?? "" });
   };
 
+  const handleGenerate = async () => {
+    const res = await fetch("http://localhost:3000/message");
+    console.log(await res.text());
+  };
+
   if (!intention) {
     return;
   }
@@ -57,6 +62,7 @@ export default function IntentionIdRoute({
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            handleGenerate();
           }}
         >
           <Input type="text" placeholder="Generate" className="text-base" />
