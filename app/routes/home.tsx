@@ -35,6 +35,7 @@ export default function Home() {
         return;
       }
 
+      setInput("");
       navigate(`/intention/${intention.id}`);
     }
   };
