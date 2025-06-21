@@ -7,5 +7,5 @@ export interface Intention {
 
 export namespace Intention {
   export const key = "Intentions";
-  export const model = new Model(Intention.key);
+  export const model = new Model<Intention>(Intention.key);
 }

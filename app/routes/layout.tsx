@@ -95,12 +95,15 @@ export default function Layout() {
                 <SidebarMenu>
                   {intentions.map((intention) => (
                     <SidebarMenuItem key={intention.id}>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton
+                        className="text-sm text-muted-foreground hover:text-foreground truncate"
+                        asChild
+                      >
                         <Link
                           to={`/intention/${intention.id}`}
-                          className="text-sm text-muted-foreground hover:text-foreground"
+                          title={intention.title}
                         >
-                          {intention.title}
+                          <span>{intention.title}</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
