@@ -1,8 +1,16 @@
+import { useEffect } from "react";
+import { Widget } from "../lib/data/widget";
 import { useComponentPreview } from "./component-preview";
+import { Card } from "./ui/card";
 
-export function Widget() {
-  const { code, setCode, codeRef, iframe, run, dirty } =
-    useComponentPreview("");
+export function WidgetCard({ widget }: { widget: Widget }) {
+  const { code, setCode, codeRef, iframe, run, dirty } = useComponentPreview(
+    widget.code,
+  );
 
-  return <>Hi!</>;
+  useEffect(() => {
+    run()?.catch((e) => console.error(e));
+  }, [widget.code]);
+
+  return <Card className="overflow-hidden h-96">{iframe}</Card>;
 }

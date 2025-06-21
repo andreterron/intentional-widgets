@@ -2,10 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as esbuild from "esbuild-wasm";
 import { once } from "lodash-es";
 import wasmURL from "esbuild-wasm/esbuild.wasm?url";
-// import { trpc } from "../lib/trpc_client";
-import indexHtml from "../playground/index.html?raw";
-import playgroundTsx from "../playground/playground.tsx.txt?raw";
-// import { env } from "../lib/env_client";
+import indexHtml from "./playground/index.html?raw";
+import playgroundTsx from "./playground/playground.tsx.txt?raw";
 
 const initOnce = once(async () => {
   // @ts-ignore

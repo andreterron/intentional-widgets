@@ -5,6 +5,9 @@ import { Intention } from "../lib/data/intention";
 import React from "react";
 import { Input } from "../components/ui/input";
 import { useSubscribe } from "../lib/use-subscribe";
+import { useModel } from "live-model";
+import { WidgetCard } from "../components/widget";
+import { Widget } from "../lib/data/widget";
 
 export function meta({ params }: Route.MetaArgs) {
   const title = Intention.model.selectById(params.id).get()?.title;
@@ -31,6 +34,7 @@ export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
 export default function IntentionIdRoute({
   loaderData: { liveIntention },
 }: Route.ComponentProps) {
+  const { items: allWidgets, create } = useModel<Widget>("Widgets");
   const { value: intention, setValue: setIntention } =
     useSubscribe(liveIntention);
 
@@ -53,11 +57,19 @@ export default function IntentionIdRoute({
         method: "POST",
         body: JSON.stringify({ intention: intention.title, prompt }),
       });
-      console.log(await res.text());
+      const code = await res.text();
+      create({
+        code,
+        intentionId: intention.id,
+      });
     } finally {
       setGenerating(false);
     }
   };
+
+  const widgets = allWidgets.filter(
+    (w) => intention && w.intentionId === intention.id,
+  );
 
   if (!intention) {
     return;
@@ -90,6 +102,11 @@ export default function IntentionIdRoute({
             disabled={generating}
           />
         </form>
+        <div className="flex flex-col gap-4 mt-6">
+          {widgets.map((w) => (
+            <WidgetCard key={w.id} widget={w} />
+          ))}
+        </div>
       </div>
     </div>
   );
