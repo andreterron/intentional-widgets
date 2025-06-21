@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import type React from "react";
 
-import { useState } from "react";
+import { useLiveState, useModel } from "live-model";
 import { Button } from "../components/ui/button";
 import {
   Sidebar,
@@ -26,6 +26,8 @@ import {
 } from "lucide-react";
 import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
+import { Intention } from "../lib/data/intention";
+import { useNavigate } from "react-router";
 
 const sidebarItems = [
   {
@@ -61,12 +63,25 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const [input, setInput] = useState("");
+  const { value: input, setValue: setInput } = useLiveState("Draft", "");
+  const { create: createIntention } = useModel<Intention>("Intentions");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim()) {
-      console.log("Starting intentional session with:", input);
+    const title = input.trim();
+    if (title) {
+      const intention = createIntention({
+        title,
+      }).get();
+
+      if (!intention) {
+        console.error("Failed to create intention");
+        return;
+      }
+      console.log("Starting intentional session with:", title);
+      navigate(`/intention/${intention.id}`);
       // Here you would handle the input submission
       setInput("");
     }
