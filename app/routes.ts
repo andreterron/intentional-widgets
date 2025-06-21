@@ -10,4 +10,5 @@ export default [
     index("routes/home.tsx"),
     route("intention/:id", "routes/intention.$id.tsx"),
   ]),
+  route("/.well-known/appspecific/com.chrome.devtools.json", "routes/404.tsx"),
 ] satisfies RouteConfig;
