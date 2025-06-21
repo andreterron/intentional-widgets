@@ -43,7 +43,7 @@ export default function IntentionIdRoute({
 
   const [generating, setGenerating] = React.useState(false);
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (prompt: string) => {
     if (!intention) {
       return;
     }
@@ -51,7 +51,7 @@ export default function IntentionIdRoute({
     try {
       const res = await fetch("http://localhost:3000/openai", {
         method: "POST",
-        body: JSON.stringify({ intention: intention.title }),
+        body: JSON.stringify({ intention: intention.title, prompt }),
       });
       console.log(await res.text());
     } finally {
@@ -75,11 +75,16 @@ export default function IntentionIdRoute({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleGenerate();
+            const form = new FormData(e.target as HTMLFormElement);
+            const prompt = form.get("widget_prompt");
+            if (typeof prompt === "string") {
+              handleGenerate(prompt);
+            }
           }}
         >
           <Input
             type="text"
+            name="widget_prompt"
             placeholder="Generate"
             className="text-base"
             disabled={generating}

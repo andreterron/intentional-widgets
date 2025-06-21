@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <!-- Patch to fix SWR requesting react@18.2.0 -->
+    <script type="importmap">
+      {
+        "imports": {
+          "https://esm.sh/stable/react@18.2.0/": "https://esm.sh/stable/react@18.3.1/"
+        }
+      }
+    </script>
+    <script>
+      let scriptElement;
+
+      window.addEventListener("message", (event) => {
+        const { type, value } = event.data;
+
+        if (type === "script") {
+          let newElement = document.createElement("script");
+          newElement.setAttribute("type", "module");
+          newElement.text = value;
+          if (scriptElement) {
+            scriptElement.replaceWith(newElement);
+          } else {
+            document.body.appendChild(newElement);
+          }
+          scriptElement = newElement;
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

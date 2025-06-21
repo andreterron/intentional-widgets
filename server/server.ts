@@ -5,6 +5,8 @@ import { env } from "./env.server";
 import { genericPrompt } from "./prompts/generic";
 import { z } from "zod";
 import bodyParser from "body-parser";
+import systemPromptTemplate from "./component_gen.sys.prompt.txt";
+import { generateComponent } from "./prompts/component";
 // import ViteExpress from "vite-express";
 
 const openai = new OpenAI({
@@ -28,6 +30,7 @@ app.get("/message", (_, res) => {
 
 const zOpenAIBody = z.object({
   intention: z.string(),
+  prompt: z.string(),
 });
 
 export type OpenAIRequestBody = z.infer<typeof zOpenAIBody>;
@@ -37,7 +40,7 @@ app.post("/openai", async (req, res, next) => {
     const body = zOpenAIBody.parse(req.body);
     const result = await openai.chat.completions.create({
       model: "chatgpt-4o-latest",
-      messages: genericPrompt(body.intention),
+      messages: await generateComponent(body.intention, body.prompt),
     });
     res.send(result.choices[0].message.content);
   } catch (e) {
