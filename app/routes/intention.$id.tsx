@@ -4,7 +4,7 @@ import { Intention } from "../lib/data/intention";
 
 import React from "react";
 import { Input } from "../components/ui/input";
-import { useModelItem } from "live-model";
+import { useSubscribe } from "../lib/use-subscribe";
 
 export function meta({ params }: Route.MetaArgs) {
   const title = Intention.model.selectById(params.id).get()?.title;
@@ -18,24 +18,21 @@ export async function clientLoader({ params }: ClientLoaderFunctionArgs) {
   if (!params.id) {
     throw new Response("Not found", { status: 404 });
   }
-  const intention = Intention.model.selectById(params.id).get();
-  if (!intention) {
+  const liveIntention = Intention.model.selectById(params.id);
+  if (!liveIntention.get()) {
     throw new Response("Not found", { status: 404 });
   }
   return {
-    intention: intention,
+    liveIntention,
+    intention: liveIntention.get(),
   };
 }
 
 export default function IntentionIdRoute({
-  loaderData: {
-    intention: { id: intentionId },
-  },
+  loaderData: { liveIntention },
 }: Route.ComponentProps) {
-  const { item: intention, setItem: setIntention } = useModelItem<Intention>(
-    Intention.key,
-    intentionId,
-  );
+  const { value: intention, setValue: setIntention } =
+    useSubscribe(liveIntention);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!intention) {
