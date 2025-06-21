@@ -34,10 +34,8 @@ export default function Home() {
         console.error("Failed to create intention");
         return;
       }
-      console.log("Starting intentional session with:", title);
+
       navigate(`/intention/${intention.id}`);
-      // Here you would handle the input submission
-      setInput("");
     }
   };
 
