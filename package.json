@@ -11,6 +11,9 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@blocknote/core": "^0.31.3",
+    "@blocknote/mantine": "^0.31.3",
+    "@blocknote/react": "^0.31.3",
     "@codemirror/lang-javascript": "^6.2.4",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-separator": "^1.1.7",
@@ -29,7 +32,7 @@
     "esbuild-wasm": "^0.25.5",
     "express": "^5.1.0",
     "isbot": "^5.1.27",
-    "live-model": "^0.4.0",
+    "live-model": "^0.4.2",
     "lucide-react": "^0.522.0",
     "openai": "^5.6.0",
     "react": "^19.1.0",

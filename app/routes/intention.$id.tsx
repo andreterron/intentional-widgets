@@ -4,10 +4,10 @@ import { Intention } from "../lib/data/intention";
 
 import React from "react";
 import { Input } from "../components/ui/input";
-import { useSubscribe } from "../lib/use-subscribe";
-import { useModel } from "live-model";
+import { useModel, useSubscribe } from "live-model";
 import { WidgetCard } from "../components/widget";
 import { Widget } from "../lib/data/widget";
+import PlanBlock from "../components/plan";
 
 export function meta({ params }: Route.MetaArgs) {
   const title = Intention.model.selectById(params.id).get()?.title;
@@ -103,6 +103,13 @@ export default function IntentionIdRoute({
           />
         </form>
         <div className="flex flex-col gap-4 mt-6">
+          <PlanBlock
+            key={intention.id}
+            initialContent={intention.pageContent}
+            onContentChange={(content) =>
+              liveIntention.setValue({ ...intention, pageContent: content })
+            }
+          />
           {widgets.map((w) => (
             <WidgetCard key={w.id} widget={w} />
           ))}

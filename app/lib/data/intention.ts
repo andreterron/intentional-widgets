@@ -1,8 +1,10 @@
 import { Model } from "live-model";
+import { Content } from "../../components/plan";
 
 export interface Intention {
   id: string;
   title: string;
+  pageContent: Content;
 }
 
 export namespace Intention {
