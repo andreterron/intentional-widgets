@@ -21,6 +21,7 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
+    "@tiptap/core": "^2.23.0",
     "@types/body-parser": "^1.19.6",
     "@uiw/react-codemirror": "^4.23.13",
     "body-parser": "^2.2.0",

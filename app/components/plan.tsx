@@ -8,6 +8,7 @@ import {
   DefaultStyleSchema,
   PartialBlock,
 } from "@blocknote/core";
+import { CustomKeybindingsExtension } from "../lib/editor/keyboard-shortcuts";
 
 export type Content = PartialBlock<
   DefaultBlockSchema,
@@ -26,6 +27,9 @@ export default function PlanBlock({
   const editor = useCreateBlockNote({
     animations: false,
     initialContent: initialContent,
+    _tiptapOptions: {
+      extensions: [CustomKeybindingsExtension],
+    },
   });
 
   // Renders the editor instance using a React component.
