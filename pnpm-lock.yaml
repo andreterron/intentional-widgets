@@ -83,6 +83,12 @@ importers:
       openai:
         specifier: ^5.6.0
         version: 5.6.0(zod@3.25.67)
+      prosemirror-keymap:
+        specifier: ^1.2.3
+        version: 1.2.3
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.3
       react:
         specifier: ^19.1.0
         version: 19.1.0

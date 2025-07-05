@@ -27,9 +27,7 @@ export default function PlanBlock({
   const editor = useCreateBlockNote({
     animations: false,
     initialContent: initialContent,
-    _tiptapOptions: {
-      extensions: [CustomKeybindingsExtension],
-    },
+    extensions: [(editor) => new CustomKeybindingsExtension(editor)],
   });
 
   // Renders the editor instance using a React component.
