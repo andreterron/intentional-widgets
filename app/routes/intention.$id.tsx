@@ -1,4 +1,4 @@
-import { ClientLoaderFunctionArgs } from "react-router";
+import { ClientLoaderFunctionArgs, useNavigate } from "react-router";
 import { Route } from "./+types/intention.$id";
 import { Intention } from "../lib/data/intention";
 
@@ -8,6 +8,9 @@ import { useModel, useSubscribe } from "live-model";
 import { WidgetCard } from "../components/widget";
 import { Widget } from "../lib/data/widget";
 import PlanBlock from "../components/plan";
+import Page from "../components/page";
+import { Button } from "../components/ui/button";
+import { TrashIcon } from "lucide-react";
 
 export function meta({ params }: Route.MetaArgs) {
   const title = Intention.model.selectById(params.id).get()?.title;
@@ -37,6 +40,7 @@ export default function IntentionIdRoute({
   const { items: allWidgets, create } = useModel<Widget>("Widgets");
   const { value: intention, setValue: setIntention } =
     useSubscribe(liveIntention);
+  const navigate = useNavigate();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!intention) {
@@ -76,7 +80,20 @@ export default function IntentionIdRoute({
   }
 
   return (
-    <div className="min-h-screen w-full bg-white">
+    <Page
+      navbar={
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => {
+            Intention.model.deleteById(intention.id);
+            navigate("/");
+          }}
+        >
+          <TrashIcon />
+        </Button>
+      }
+    >
       <div className="py-5 px-4 max-w-2xl">
         <input
           value={intention.title}
@@ -115,6 +132,6 @@ export default function IntentionIdRoute({
           ))}
         </div>
       </div>
-    </div>
+    </Page>
   );
 }

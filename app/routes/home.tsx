@@ -8,6 +8,7 @@ import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
 import { Intention } from "../lib/data/intention";
 import { useNavigate } from "react-router";
+import Page from "../components/page";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -41,7 +42,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center p-8">
+    <Page className="flex flex-1 flex-col items-center justify-center p-8">
       <div className="w-full max-w-2xl space-y-8">
         <div className="text-center space-y-4">
           <h1 className="text-3xl font-bold text-foreground">
@@ -73,6 +74,6 @@ export default function Home() {
           </Button>
         </form>
       </div>
-    </main>
+    </Page>
   );
 }

@@ -20,13 +20,13 @@ export default function PlanBlock({
   initialContent,
   onContentChange,
 }: {
-  initialContent: Content;
+  initialContent: Content | undefined;
   onContentChange: (content: Content) => void;
 }) {
   // Creates a new editor instance.
   const editor = useCreateBlockNote({
     animations: false,
-    initialContent: initialContent,
+    initialContent: initialContent?.length === 0 ? undefined : initialContent,
     extensions: [(editor) => new CustomKeybindingsExtension(editor)],
   });
 

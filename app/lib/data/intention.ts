@@ -4,7 +4,7 @@ import { Content } from "../../components/plan";
 export interface Intention {
   id: string;
   title: string;
-  pageContent: Content;
+  pageContent?: Content;
 }
 
 export namespace Intention {
